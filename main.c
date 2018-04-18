@@ -15,7 +15,7 @@ int main(void) {
 
   izlaz = fopen("rodjendan.txt", "w"); // Otvaranje datoteke
   
-  for ( i = 0; i < 2; ++i) {
+  for ( i = 0; i < 10; ++i) {
     printf("\n\nUnos podataka za\n\t\t Osobu %d\n\n\n", i + 1);
 
     printf("\nUnesite ime osobe: ");
