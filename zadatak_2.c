@@ -13,31 +13,24 @@ int main(void) {
   
   FILE * ulaz, * izlaz;
 
-  izlaz = fopen("rodjendan.txt", "w"); // Otvaranje datoteke
+  ulaz = fopen("rodjendan.txt", "r"); // Otvaranje datoteke
   
   for ( i = 0; i < 10; ++i) {
-    printf("\n\nUnos podataka za\n\t\t Osobu %d\n\n\n", i + 1);
+    printf("\n\Citanje podataka za\n\t\t Osobu %d\n\n\n", i + 1);
 
-    printf("\nUnesite ime osobe: ");
-    scanf("%s", &ime[i]);
+    fscanf(ulaz, "%s", &ime[i]);
 
-    printf("\nUnesite prezime: ");
-    scanf("%s", &prezime[i]);
+    fscanf(ulaz, "%s", &prezime[i]);
 
-    do {
-      printf("\nUnesite dan rodjenja(broj): ");
-      scanf("%d", &danRodjenja[i]);
-    } while (danRodjenja[i] < 1 || danRodjenja[i] > 31); // BUG: Ako se unese nesto sto nije broj program puca!
+    fscanf(ulaz, "%d", &danRodjenja[i]);
+   
+    fscanf(ulaz, "%s", &mesecRodjenja[i]);
     
-    printf("\nUnesite mesec rodjenja(slovima): ");
-    scanf("%s", &mesecRodjenja[i]);
-    
-    printf("\nUnesite godinu rodjenja(broj): ");
-    scanf("%d", &godinaRodjenja[i]);
+    fscanf(ulaz, "%d", &godinaRodjenja[i]);
     
     
 
-    fprintf(izlaz, "Osoba %d:\n\t Ime: %s\n\t Prezime: %s\n\t Dan rodjenja: %d.\n\t Mesec rodjena: %s\n\t Godina rodjenja: %d\n\t\n\n\n",
+    printf("Osoba %d:\n\t Ime: %s\n\t Prezime: %s\n\t Dan rodjenja: %d.\n\t Mesec rodjena: %s\n\t Godina rodjenja: %d\n\t\n\n\n",
       i + 1, ime[i], prezime[i], danRodjenja[i], mesecRodjenja[i], godinaRodjenja[i]);
     
     }
