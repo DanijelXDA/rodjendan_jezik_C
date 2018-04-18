@@ -1,101 +1,49 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
 
-struct osoba // Definicija strukture ucenik
-	{
-		int godinaRodjenja;
-		int danRodjenja;
-		char ime[20];
-		char prezime[20];
-		char mesecRodjenja[10]; // predtavlja mesec unet kao rec tj. string
+#include <stdio.h> 
+#include <stdlib.h> 
+    
+int main(void) {
+	
+  int godinaRodjenja[10];
+  int danRodjenja[10];
+  char ime[20][10];
+  char prezime[20][10];
+  char mesecRodjenja[10][10]; // predstavlja mesec unet kao rec tj. string    
+  int i, j; // pomocne promenljive za kretanje kroz matricu
+  
+  FILE * ulaz, * izlaz;
 
-	} o1, o2, o3, o4, o5, o6, o7, o8, o9, o10;
+  izlaz = fopen("rodjendan.txt", "w"); // Otvaranje datoteke
+  
+  for ( i = 0; i < 2; ++i) {
+    printf("\n\nUnos podataka za\n\t\t Osobu %d\n\n\n", i + 1);
 
-//Definicije i deklaracije slobodnih funkcija
+    printf("\nUnesite ime osobe: ");
+    scanf("%s", &ime[i]);
 
-
-// Funkcija kojom se korisniku dozvoljava da odabere da li da upisuje ili iscitava podatke iz datoteke "rodjendan.txt"
-void funkcijaIzbor(char *n) {
+    printf("\nUnesite prezime: ");
+    scanf("%s", &prezime[i]);
 
     do {
-        printf("\nOdaberite opciju: \n\t1. Upis u datoteku 'rodjendan.txt'\n\t2. Citanje podataka iz datoteke 'rodjendan.txt'\n\n Vas izbor je: ");
-        scanf("%c", n);
-        fflush(stdin);
-    } while( (*n != '1' && *n != '2') );
+      printf("\nUnesite dan rodjenja(broj): ");
+      scanf("%d", &danRodjenja[i]);
+    } while (danRodjenja[i] < 1 || danRodjenja[i] > 31); // BUG: Ako se unese nesto sto nije broj program puca!
+    
+    printf("\nUnesite mesec rodjenja(slovima): ");
+    scanf("%s", &mesecRodjenja[i]);
+    
+    printf("\nUnesite godinu rodjenja(broj): ");
+    scanf("%d", &godinaRodjenja[i]);
+    
+    
 
-    return; // ne vracamo nista jer je funkcija tipa void
-}
-
-
-void unosPodatakaUDatoteku(FILE *izlaz) {
-
-    for(int j = 1; j < 11; ++j) {
-        printf("Unos podataka za\n\t\t Osobu %d\n\n", j);
-
-        printf("Unesite ime: ");
-        gets(o1.ime);
-
-
-        printf("\nUnesite prezime: ");
-        gets(o1.prezime);
-
-        do {
-            printf("\nUnesite dan rodjenja(rodjenja): ");
-            scanf("%d", &o1.danRodjenja);
-        } while( o1.danRodjenja < 1 || o1.danRodjenja > 31); // BUG: Ako se unesete nesto sto nije broj program puca!
-
-
-        printf("\nUnesite ")
+    fprintf(izlaz, "Osoba %d:\n\t Ime: %s\n\t Prezime: %s\n\t Dan rodjenja: %d.\n\t Mesec rodjena: %s\n\t Godina rodjenja: %d\n\t\n\n\n",
+      i + 1, ime[i], prezime[i], danRodjenja[i], mesecRodjenja[i], godinaRodjenja[i]);
+    
     }
-
-    for(int i = 1; i < 11; ++i) {
-        fprintf(izlaz, "\t\tOsoba %d:\nIme: %s\t Prezime: %s\t Dan rodjenja: %d.\t Mesec rodjena: %s\t Godina rodjenja: %d\t\n",
-                i, o1.ime, o1.prezime, o1.danRodjenja, o1.mesecRodjenja, o1.mesecRodjenja, o1.godinaRodjenja);
-    }
-
-    return;
-}
-
-bool otvaranjeDatoteke(FILE *izlaz) {
-
-
-    bool uspesno = false;
-
-    izlaz = fopen("rodjendan.txt", "a"); // Otvaranje datoteke
-
-
-    if( izlaz != NULL ) {
-        bool uspesno = true;
-        printf("\t\tDatoteka kreirana!\n");
-    }
-    else {
-        printf("\t\tDatoteka ne postoji!\n");
-    }
-
-    return uspesno;
-
-
-}
-
-int main(void)
-{
-    FILE *ulaz, *izlaz;
-
-    izlaz = NULL;
-
-    char izbor = -1; // Izbor jus uvek nije donet
-
-    funkcijaIzbor(&izbor); // Pozivamo funckiju izbor
-
-    if( izbor == '1')
-        if( otvaranjeDatoteke(izlaz) == false) // Funkcija za unos podataka u datoteku 'rodjendan.txt'
-            unosPodatakaUDatoteku(izlaz);
-        else
-            return 1;
-    else {
-
-    }
-
+    
+    fclose(izlaz);
+    
+    
   return 0;
 }
