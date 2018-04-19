@@ -1,6 +1,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// Definisanje strukture Osoba
+
+int i = 0; // pomocne promenljive za kretanje kroz matricu
+
+struct Osoba {
+
+   int godinaRodjenja;
+   int danRodjenja;
+   char ime[20];
+   char prezime[20];
+   char mesecRodjenja[10]; // predstavlja mesec unet kao rec tj. string
+
+
+} osobe[10], o;
+
    //Definicije i deklaracije slobodnih funkcija
 
    // Funkcija kojom se korisniku dozvoljava da odabere da li da upisuje ili iscitava podatke iz datoteke "rodjendan.txt"
@@ -18,36 +33,30 @@
 
 void upisUDatoteku(FILE * izlaz) {
 
-   int godinaRodjenja[10];
-   int danRodjenja[10];
-   char ime[20][10];
-   char prezime[20][10];
-   char mesecRodjenja[10][10]; // predstavlja mesec unet kao rec tj. string
-   int i; // pomocne promenljive za kretanje kroz matricu
 
    izlaz = fopen("rodjendan.txt", "w"); // Otvaranje datoteke
 
-   for (i = 0; i < 2; ++i) { //+ LIMIT DO DVA SVRHA BRZE TESTIRANJE PROGRAMA!
-      printf("\n\nUnos podataka za\n\t\t Osobu %d\n\n\n", i + 1);
+   for (i = 0; i < 10; ++i) { // LIMIT DO DVA SVRHA BRZE TESTIRANJE PROGRAMA!
+      printf("\nUnos podataka za\n\t\t Osobu %d\n", i + 1);
 
       printf("\nUnesite ime osobe: ");
-      scanf("%s", & ime[i]);
+      scanf("%s", & osobe[i].ime);
 
       printf("\nUnesite prezime: ");
-      scanf("%s", & prezime[i]);
+      scanf("%s", & osobe[i].prezime[i]);
 
       do {
          printf("\nUnesite dan rodjenja(broj): ");
-         scanf("%d", & danRodjenja[i]);
-      } while (danRodjenja[i] < 1 || danRodjenja[i] > 31); // BUG: Ako se unese nesto sto nije broj program puca!
+         scanf("%d", & osobe[i].danRodjenja);
+      } while (osobe[i].danRodjenja < 1 || osobe[i].danRodjenja > 31); // BUG: Ako se unese nesto sto nije broj program puca!
 
       printf("\nUnesite mesec rodjenja(slovima): ");
-      scanf("%s", & mesecRodjenja[i]);
+      scanf("%s", & osobe[i].mesecRodjenja);
 
       printf("\nUnesite godinu rodjenja(broj): ");
-      scanf("%d", & godinaRodjenja[i]);
+      scanf("%d", & osobe[i].godinaRodjenja );
 
-      fprintf(izlaz, "%s %s %d %s %d\n", ime[i], prezime[i], danRodjenja[i], mesecRodjenja[i], godinaRodjenja[i]);
+      fprintf(izlaz, "%s %s %d %s %d\n", osobe[i].ime, osobe[i].prezime, osobe[i].danRodjenja, osobe[i].mesecRodjenja, osobe[i].godinaRodjenja);
 
    }
 
@@ -59,32 +68,22 @@ void upisUDatoteku(FILE * izlaz) {
 
 void citanjeIzFajla(FILE * ulaz) {
 
-   char izbor = 0;
-
-   int godinaRodjenja[10];
-   int danRodjenja[10];
-   char ime[20][10];
-   char prezime[20][10];
-   char mesecRodjenja[10][10]; // predstavlja mesec unet kao rec tj. string
-   int i; // pomocne promenljive za kretanje kroz matricu
-
    ulaz = fopen("rodjendan.txt", "r"); // Otvaranje datoteke
 
-   for (i = 0; i < 2; ++i) {
-      printf("\n\nCitanje podataka za\n\t\t Osobu %d\n\n\n", i + 1);
+   for (i = 0; i < 10; ++i) {
+      printf("\n\nCitanje podataka za\n\t\t Osobu %d\n\n", i + 1);
 
-      fscanf(ulaz, "%s", & ime[i]);
+      fscanf(ulaz, "%s", & osobe[i].ime);
 
-      fscanf(ulaz, "%s", & prezime[i]);
+      fscanf(ulaz, "%s", & osobe[i].prezime);
 
-      fscanf(ulaz, "%d", & danRodjenja[i]);
+      fscanf(ulaz, "%d", & osobe[i].danRodjenja);
 
-      fscanf(ulaz, "%s", & mesecRodjenja[i]);
+      fscanf(ulaz, "%s", & osobe[i].mesecRodjenja);
 
-      fscanf(ulaz, "%d", & godinaRodjenja[i]);
+      fscanf(ulaz, "%d", & osobe[i].godinaRodjenja);
 
-      printf("Osoba %d:\n\t Ime: %s\n\t Prezime: %s\n\t Dan rodjenja: %d.\n\t Mesec rodjena: %s\n\t Godina rodjenja: %d\n\t\n\n\n",
-         i + 1, ime[i], prezime[i], danRodjenja[i], mesecRodjenja[i], godinaRodjenja[i]);
+      printf("Osoba %d:\n\t Ime: %s\n\t Prezime: %s\n\t Dan rodjenja: %d.\n\t Mesec rodjena: %s\n\t Godina rodjenja: %d\n\t\n", i + 1, osobe[i].ime, osobe[i].prezime, osobe[i].danRodjenja, osobe[i].mesecRodjenja, osobe[i].godinaRodjenja);
 
    }
 
